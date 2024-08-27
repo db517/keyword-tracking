@@ -1,9 +1,9 @@
-name: Update Keyword Data
+name: Update Keywords
 
 on:
   schedule:
-    - cron: "0 0 * * *" # 매일 아침 9시(UTC)에 실행
-  workflow_dispatch: # 수동 실행을 허용하는 이벤트
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   update-keywords:
@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: '16'
 
@@ -25,9 +25,12 @@ jobs:
       run: node update-keywords.js
 
     - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }} # 여기서 'GH_PAT'는 시크릿의 이름
       run: |
-        git config --local user.email "action@github.com"
+        git config --local user.email "dubi8205@gmail.com"
         git config --local user.name "GitHub Action"
         git add .
         git commit -m "Auto-update keyword data"
-        git push origin main
+        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/db517/keyword-tracking
+
