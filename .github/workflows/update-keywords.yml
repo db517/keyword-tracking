@@ -1,0 +1,33 @@
+name: Update Keyword Data
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 매일 아침 9시(UTC)에 실행
+  workflow_dispatch: # 수동 실행을 허용하는 이벤트
+
+jobs:
+  update-keywords:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run update script
+      run: node update-keywords.js
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "Auto-update keyword data"
+        git push origin main
