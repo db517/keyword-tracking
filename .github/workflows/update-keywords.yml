@@ -2,8 +2,8 @@ name: Update Keywords
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-  workflow_dispatch:
+    - cron: "0 9 * * *" # 매일 아침 9시(UTC)에 실행
+  workflow_dispatch: # 수동 실행을 허용
 
 jobs:
   update-keywords:
@@ -26,11 +26,10 @@ jobs:
 
     - name: Commit and push changes
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }} # 여기서 'GH_PAT'는 시크릿의 이름
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git config --local user.email "dubi8205@gmail.com"
         git config --local user.name "GitHub Action"
         git add .
         git commit -m "Auto-update keyword data"
-        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/db517/keyword-tracking
-
+        git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/db517/keyword-tracking.git main
