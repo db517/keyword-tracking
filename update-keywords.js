@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const fs = require('fs');
 const path = 'keywordFrequency.json';
 
