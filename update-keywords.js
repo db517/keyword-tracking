@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const fs = require('fs');
 const path = 'keywordFrequency.json';
 
@@ -27,3 +28,4 @@ function updateKeywords() {
 
 // 함수 실행
 updateKeywords();
+
